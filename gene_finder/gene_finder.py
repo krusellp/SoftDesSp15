@@ -52,7 +52,7 @@ def get_reverse_complement(dna):
     """
     # TODO: implement this
     complement = []
-    for x in dna:
+    for x in dna[::-1]:
         complement.append(get_complement(x))
     return ''.join(complement)
 
@@ -108,16 +108,17 @@ def find_all_ORFs_oneframe(dna):
     all_codons = []
     i = 0 
     while i < len(dna):
-            # print len(dna)
-            codon = dna[i:i+3]
-            if len(codon) < 3:
-                break
-            elif aa_table[codon] == 'M':
-                all_codons.append(dna[i:i+len(rest_of_ORF(dna[i:]))])
-                # print len(rest_of_ORF(dna)),i
-                i += len(rest_of_ORF(dna))
-            else:
-                i +=3
+        # print len(dna)
+#        print "looping " + str(i) + " len(dna) " + str(len(dna))
+        codon = dna[i:i+3]
+        if len(codon) < 3:
+            break
+        elif aa_table[codon] == 'M':
+            all_codons.append(rest_of_ORF(dna[i:]))
+            # print len(rest_of_ORF(dna)),i
+            i += len(all_codons[-1])
+        else:
+            i +=3
 
     return all_codons   
         
@@ -230,14 +231,20 @@ def gene_finder(dna):
     """
     # TODO: implement this
     threshold = longest_ORF_noncoding(dna,1500)
+
+    print "done with longest_ORF_noncoding"
     if len(dna) > threshold:
         all_ORFS = find_all_ORFs_both_strands(dna)
+        print "DONE WITH longest ORFs both strands"
         filtered_ORFS = [coding_strand_to_AA(orf) for orf in all_ORFS if len(orf) >= threshold]
     return filtered_ORFS
 
 from load import load_seq
 dna = load_seq("./data/X73525.fa")
 # print find_all_ORFs_both_strands(dna)
+import doctest
+doctest.testmod()
+
 print gene_finder(dna)
 
 
