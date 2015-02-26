@@ -159,9 +159,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(6, 9)
-    green_function = build_random_function(6, 9)
-    blue_function = build_random_function(6, 9)
+    red_function = build_random_function(6, 13)
+    green_function = build_random_function(6, 13)
+    blue_function = build_random_function(6, 13)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
@@ -188,9 +188,9 @@ if __name__ == '__main__':
     # Create some computational art!
     # TODO: Un-comment the generate_art function call after you
     #       implement remap_interval and evaluate_random_function
-    generate_art("myart7.png")
+    generate_art("myart12.png")
 
     # Test that PIL is installed correctly
     # TODO: Comment or remove this function call after testing PIL install
     # test_image("noise.png")
-print build_random_function(2,3)
+# print build_random_function(2,3)
