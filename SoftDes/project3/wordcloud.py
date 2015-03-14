@@ -78,13 +78,14 @@ def remap_interval(val, input_interval_start, input_interval_end, output_interva
 def wordcloudplot(filename):
 	wordlist,freqlist = most_common(filename,20)
 	print wordlist
-	x = 0.4
+	x = 0.5
 	y = 0.5
 	a = np.matrix([x,y]).T
 	input_max = max(freqlist)
 	input_min = min(freqlist)
 	angle = m.radians(36)
 	i = 0
+	angle2 = 0
 	# print input_min
 	rot = np.matrix( [ (m.cos(angle),-m.sin(angle)), (m.sin(angle), m.cos(angle)) ] )
 	for word,freq in zip(wordlist,freqlist):
@@ -92,6 +93,9 @@ def wordcloudplot(filename):
 			scaled_value = remap_interval(freq,input_min,input_max,20,50)
 			wally = plt.text(x,y,word,fontsize=scaled_value,color=random.choice(['r','deeppink','y','b','darkorange','aqua','teal','coral','cadetblue','forestgreen']))
 			a = rot * a
+			wally.set_rotation(angle2)
+			wally.set_verticalalignment('top')
+			angle2 = angle2 - 90
 			# print "a", a,'word',word
 			# print "newx", newx
 			# print "newy", newy
@@ -105,6 +109,9 @@ def wordcloudplot(filename):
 		elif i >= 10:
 			scaled_value = remap_interval(freq,input_min,input_max,20,70)
 			wally = plt.text(x/2.1,y/2.1,word,fontsize=scaled_value, color=random.choice(['r','deeppink','y','b','darkorange','aqua','teal','coral','cadetblue','forestgreen']))
+			wally.set_rotation(angle2)
+			angle2 = angle2 + 90
+			wally.set_verticalalignment('baseline')
 			a = rot * a
 			# print "a", a,'word',word
 			# print "newx", newx
